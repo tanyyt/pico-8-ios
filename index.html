@@ -1576,6 +1576,7 @@
                     if (child.startsWith('.')) {
                         continue;
                     }
+
                     let p = `${path}/${child}`;
                     if (FS.isFile(FS.lookupPath(p).node.mode)) {
                         // 搜寻所有命名为log.txt的日志文件，下载下来
