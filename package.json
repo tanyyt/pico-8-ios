@@ -1,0 +1,9 @@
+{
+  "name": "pico-8",
+  "version": "0.2.6",
+  "description": "Modify Pico-8 Education version to make pico-8 could run on iOS browser by localhost",
+  "main": "app.js",
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}

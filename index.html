@@ -5,6 +5,9 @@
     <meta charset="utf-8">
     <meta property="og:title" content="PICO-8 Education Edition">
     <meta name="viewport" content="width=device-width">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
 
     <script type="text/javascript">
         function microAjax(B, A) { this.bindFunction = function (E, D) { return function () { return E.apply(D, [D]) } }; this.stateChange = function (D) { if (this.request.readyState == 4) { this.callbackFunction(this.request.responseText) } }; this.getRequest = function () { if (window.ActiveXObject) { return new ActiveXObject("Microsoft.XMLHTTP") } else { if (window.XMLHttpRequest) { return new XMLHttpRequest() } } return false }; this.postBody = (arguments[2] || ""); this.callbackFunction = A; this.url = B; this.request = this.getRequest(); if (this.request) { var C = this.request; C.onreadystatechange = this.bindFunction(this.stateChange, this); if (this.postBody !== "") { C.open("POST", B, true); C.setRequestHeader("X-Requested-With", "XMLHttpRequest"); C.setRequestHeader("Content-type", "application/x-www-form-urlencoded"); C.setRequestHeader("Connection", "close") } else { C.open("GET", B, true) } C.send(this.postBody) } };
@@ -1566,6 +1569,27 @@
 
         }
 
+        function download_all_logs() {
+            function search_log_and_download(path) {
+                let children = FS.readdir(path);
+                for (const child of children) {
+                    if (child.startsWith('.')) {
+                        continue;
+                    }
+                    let p = `${path}/${child}`;
+                    if (FS.isFile(FS.lookupPath(p).node.mode)) {
+                        // 搜寻所有命名为log.txt的日志文件，下载下来
+                        if (child === 'log.txt') {
+                            console.log(`Start download log:${p}`);
+                            download_browser_file(p, FS.readFile(p, { encoding: 'utf8' }));
+                        }
+                        continue;
+                    }
+                    search_log_and_download(p);
+                }
+            }
+            search_log_and_download('/user_data/carts');
+        }
 
         var help_about = `
     Welcome to <span style="font-weight:bold; color:#09f">PICO-8 Education Edition</span>!<br>
@@ -3208,6 +3232,7 @@
     <div style="width:320px; display:table; top:0px; position:absolute">
         <img id="zoot" onclick="bunny_hide_or_say(help_index);" src="/gfx/zoot_idle.gif" style="cursor:pointer; display:table; width:48px; height:48px;
     max-width:6vw; max-height:6vw; margin:4px">
+        <button type="button" onclick="download_all_logs()">Download all logs</button>
 
         <div id="speech_bubble"
             style="display:none; min-width:200px; max-width:80vw; background-color:#fff0e8; float:left; padding:16px; color:#222; border-radius: 10px; margin-left:10px;">
