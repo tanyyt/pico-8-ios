@@ -24,7 +24,7 @@ npm install express
 ```shell
 node app.js
 ```
-接着再在Safari中输入地址：(http://localhost:3000)就可以在iPad上运行pico-8了！
+接着再在Safari中输入地址：[http://localhost:3000](http://localhost:3000)就可以在iPad上运行pico-8了！
 
 需要注意的是，因为iOS上是假后台，因此在Safari访问后，需要将窗口切回启动服务的窗口才能正常跑本地服务逻辑，不过这个问题在进入pico-8界面后不会再出现
 
