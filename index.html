@@ -1569,7 +1569,7 @@
 
         }
 
-        function download_all_logs() {
+        function download_log_txt() {
             function search_log_and_download(path) {
                 let children = FS.readdir(path);
                 for (const child of children) {
@@ -1578,10 +1578,11 @@
                     }
                     let p = `${path}/${child}`;
                     if (FS.isFile(FS.lookupPath(p).node.mode)) {
-                        // 搜寻所有命名为log.txt的日志文件，下载下来
+                        // 搜寻第一个命名为log.txt的日志文件，下载下来
                         if (child === 'log.txt') {
                             console.log(`Start download log:${p}`);
                             download_browser_file(p, FS.readFile(p, { encoding: 'utf8' }));
+                            return;
                         }
                         continue;
                     }
@@ -3232,7 +3233,7 @@
     <div style="width:320px; display:table; top:0px; position:absolute">
         <img id="zoot" onclick="bunny_hide_or_say(help_index);" src="/gfx/zoot_idle.gif" style="cursor:pointer; display:table; width:48px; height:48px;
     max-width:6vw; max-height:6vw; margin:4px">
-        <button type="button" onclick="download_all_logs()">Download all logs</button>
+        <button type="button" onclick="download_log_txt()">Download log.txt</button>
 
         <div id="speech_bubble"
             style="display:none; min-width:200px; max-width:80vw; background-color:#fff0e8; float:left; padding:16px; color:#222; border-radius: 10px; margin-left:10px;">
